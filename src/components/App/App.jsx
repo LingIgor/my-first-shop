@@ -5,12 +5,14 @@ import { Footer } from "../Footer/Footer";
 import { Header } from "../Header/Header";
 import { useDispatch } from "react-redux";
 import { getCategories } from "../../redux/categoriesSlice/categoriesSlice";
+import { getProducts } from "../../redux/poductsSlice/productsSlice";
 
 export const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategories());
+    dispatch(getProducts());
   }, [dispatch]);
 
   return (
