@@ -2,23 +2,44 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../../utils/constants";
 
-// export const getUser = createAsyncThunk(
-//   "user/getUser",
-//   async (_, thunkAPI) => {
-//     try {
-//       const res = await axios(`${BASE_URL}/user`);
-//       return res.data;
-//     } catch (e) {
-//       console.log(e);
-//       return thunkAPI.rejectWithValue(e);
-//     }
-//   }
-// );
+export const createUser = createAsyncThunk(
+  "users/createUser",
+  async (payload, thunkAPI) => {
+    try {
+      const res = await axios.post(`${BASE_URL}/users`, payload);
+      return res.data;
+    } catch (e) {
+      console.log(e);
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  "users/loginUser",
+  async (payload, thunkAPI) => {
+    try {
+      const res = await axios.post(`${BASE_URL}/auth/login`, payload);
+      const login = await axios(`${BASE_URL}/auth/profile`, {
+        headers: {
+          Authorization: `Bearer ${res.data.access_token}`,
+        },
+      });
+
+      return login.data;
+    } catch (e) {
+      console.log(e);
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
 
 const initialState = {
-  currentUser: [],
+  currentUser: null,
   cart: [],
   isLoading: false,
+  formType: "singup",
+  showForm: false,
 };
 
 const userSlice = createSlice({
@@ -39,13 +60,21 @@ const userSlice = createSlice({
 
       state.cart = newCart;
     },
+    toggleForm: (state, { payload }) => {
+      state.showForm = payload;
+    },
+    toggleFormType: (state, { payload }) => {
+      state.formType = payload;
+    },
   },
   extraReducers: (builder) => {
-    // builder
-    //   .addCase(getUser.fulfilled, (state, { payload }) => {
-    //     state.list = payload;
-    //     state.isLoading = false;
-    //   })
+    builder
+      .addCase(createUser.fulfilled, (state, { payload }) => {
+        state.currentUser = payload;
+      })
+      .addCase(loginUser.fulfilled, (state, { payload }) => {
+        state.currentUser = payload;
+      });
     //   .addCase(getUser.pending, (state) => {
     //     state.isLoading = true;
     //   })
@@ -55,6 +84,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { addItemToCart } = userSlice.actions;
+export const { addItemToCart, toggleForm, toggleFormType } = userSlice.actions;
 
 export default userSlice.reducer;

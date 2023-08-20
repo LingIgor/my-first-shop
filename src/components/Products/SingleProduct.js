@@ -12,10 +12,7 @@ export const SingleProduct = () => {
   const { data, isLoading, isFetching, isSuccess } = useGetProductQuery({ id });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { related } = useSelector(({ products }) => products);
-  const state = useSelector((state) => state.products.list);
-  console.log(state);
-  console.log(related);
+  const { list, related } = useSelector(({ products }) => products);
 
   useEffect(() => {
     if (!isFetching && !isLoading && !isSuccess) {
@@ -24,17 +21,17 @@ export const SingleProduct = () => {
   });
 
   useEffect(() => {
-    if (data) {
-      dispatch(getRelatedProducts());
-    }
-  }, [data]);
+    if (!data || !list.length) return;
+
+    dispatch(getRelatedProducts(data.category.id));
+  }, [data, list.length, dispatch]);
 
   return !data ? (
     <section>Loading...</section>
   ) : (
     <>
       <Product {...data} />
-      <Products products={state} amount={5} title="Trending" />
+      <Products products={related} amount={5} title="Trending" />
     </>
   );
 };
