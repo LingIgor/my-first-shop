@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/routesObject";
 import LOGO from "../../images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +8,13 @@ import { toggleForm } from "../../redux/userSlice/userSlice";
 export const Header = () => {
   const { currentUser } = useSelector(({ user }) => user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [values, setValues] = useState({ name: "Guest" });
+  // const [searchValue, setSearchValue] = useState("");
+  // const { data, isLoading } = useGetProductsQuery({ title: searchValue });
+  // console.log(data);
+
   useEffect(() => {
     if (!currentUser) return;
 
@@ -19,8 +24,14 @@ export const Header = () => {
   const handleClick = () => {
     if (!currentUser) {
       dispatch(toggleForm(true));
+    } else {
+      navigate(ROUTES.PROFILE);
     }
   };
+
+  // const handleSearch = ({ target: { value } }) => {
+  //   setSearchValue(value);
+  // };
 
   return (
     <div>
