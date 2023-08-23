@@ -1,9 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/routesObject";
-import LOGO from "../../images/logo.png";
+import LOGO from "../../images/logo.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleForm } from "../../redux/userSlice/userSlice";
+// import {
+//   MainDiv,
+//   NameDiv,
+//   IconFill,
+//   SignupBtn,
+//   StyledInput,
+// } from "./Header.style";
+import {
+  MainDiv,
+  LogoLink,
+  LogoImg,
+  NameDiv,
+  SearchForm,
+  CartLink,
+  CartIcon,
+  CartCount,
+  SignupBtn,
+  StyledInput,
+  StyledSvgCart,
+  StyledSvgHeart,
+} from "./Header.style";
 
 export const Header = () => {
   const { currentUser } = useSelector(({ user }) => user);
@@ -34,32 +55,53 @@ export const Header = () => {
   // };
 
   return (
-    <div>
+    <MainDiv>
       <div>
-        <Link to={ROUTES.HOME}>
-          <img src={LOGO} alt="logo" width="70px" />
-        </Link>
+        <LogoLink to={ROUTES.HOME}>
+          <LogoImg src={LOGO} alt="logo" width="40px" />
+        </LogoLink>
       </div>
-      <button onClick={handleClick}> SIGNUP</button>
-      <div>{values.name}</div>
-      <form>
-        <input
+      {!currentUser ? (
+        <SignupBtn onClick={handleClick}> LogIn/Up</SignupBtn>
+      ) : (
+        <SignupBtn>LogOut</SignupBtn>
+      )}
+
+      <NameDiv onClick={handleClick}>{values.name}</NameDiv>
+
+      <SearchForm>
+        <StyledInput
           name="search"
           placeholder="Search for anything..."
           autoComplete="off"
           onChange={() => {}}
           value=""
-        ></input>
+        />
         <div></div>
-      </form>
+      </SearchForm>
 
       <div>
-        <Link to={ROUTES.HOME}></Link>
+        <CartLink to={ROUTES.CART}>
+          <StyledSvgCart>
+            <CartIcon
+              xlinkHref={`${process.env.PUBLIC_URL}/sprite.svg#icon-cart`}
+            />
+          </StyledSvgCart>
+          Cart
+          <CartCount>0</CartCount>
+        </CartLink>
       </div>
       <div>
-        <Link to={ROUTES.CART}></Link>
-        <span>2</span>
+        <CartLink>
+          <StyledSvgHeart>
+            <CartIcon
+              xlinkHref={`${process.env.PUBLIC_URL}/sprite.svg#icon-heart`}
+            />
+          </StyledSvgHeart>
+          Favourite
+          <CartCount>0</CartCount>
+        </CartLink>
       </div>
-    </div>
+    </MainDiv>
   );
 };

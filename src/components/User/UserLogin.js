@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser, toggleForm } from "../../redux/userSlice/userSlice";
+import {
+  FormContainer,
+  FormTitle,
+  Input,
+  SubmitButton,
+} from "./UserSignup.styled";
 
 export const UserLogin = ({ toggleCurrentTypeForm }) => {
   const [values, setValues] = useState({
@@ -26,10 +32,10 @@ export const UserLogin = ({ toggleCurrentTypeForm }) => {
 
   return (
     <div>
-      <div>Sign Up</div>
-      <form onSubmit={handleSubmit}>
+      <FormTitle>Login</FormTitle>
+      <FormContainer onSubmit={handleSubmit}>
         <div>
-          <input
+          <Input
             type="email"
             name="email"
             placeholder="your email"
@@ -41,7 +47,7 @@ export const UserLogin = ({ toggleCurrentTypeForm }) => {
         </div>
 
         <div>
-          <input
+          <Input
             type="password"
             name="password"
             placeholder="your password"
@@ -52,17 +58,16 @@ export const UserLogin = ({ toggleCurrentTypeForm }) => {
           />
         </div>
 
-        <button>Login</button>
-      </form>
-      <div>
-        <button
+        <SubmitButton>Login</SubmitButton>
+        <SubmitButton
           onClick={() => {
             toggleCurrentTypeForm("signup");
           }}
         >
           Do you have acount? Signup
-        </button>
-      </div>
+        </SubmitButton>
+      </FormContainer>
+      <div></div>
     </div>
   );
 };

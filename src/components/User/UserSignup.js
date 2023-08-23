@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createUser, toggleForm } from "../../redux/userSlice/userSlice";
+import {
+  FormContainer,
+  FormTitle,
+  Input,
+  SubmitButton,
+} from "./UserSignup.styled";
 
 export const UserSignup = ({ toggleCurrentTypeForm }) => {
   const [values, setValues] = useState({
@@ -28,10 +34,10 @@ export const UserSignup = ({ toggleCurrentTypeForm }) => {
 
   return (
     <div>
-      <div>Sign Up</div>
-      <form onSubmit={handleSubmit}>
+      <FormTitle>Sign Up</FormTitle>
+      <FormContainer onSubmit={handleSubmit}>
         <div>
-          <input
+          <Input
             type="email"
             name="email"
             placeholder="your email"
@@ -42,7 +48,7 @@ export const UserSignup = ({ toggleCurrentTypeForm }) => {
           />
         </div>
         <div>
-          <input
+          <Input
             type="name"
             name="name"
             placeholder="your name"
@@ -53,7 +59,7 @@ export const UserSignup = ({ toggleCurrentTypeForm }) => {
           />
         </div>
         <div>
-          <input
+          <Input
             type="password"
             name="password"
             placeholder="your password"
@@ -64,7 +70,7 @@ export const UserSignup = ({ toggleCurrentTypeForm }) => {
           />
         </div>
         <div>
-          <input
+          <Input
             type="avatar"
             name="avatar"
             placeholder="your avatar"
@@ -74,17 +80,17 @@ export const UserSignup = ({ toggleCurrentTypeForm }) => {
             required
           />
         </div>
-        <button>Create account</button>
-      </form>
-      <div>
-        <button
-          onClick={() => {
-            toggleCurrentTypeForm("login");
-          }}
-        >
-          Create an account. Log In?
-        </button>
-      </div>
+        <SubmitButton>Create account</SubmitButton>
+        <div>
+          <SubmitButton
+            onClick={() => {
+              toggleCurrentTypeForm("login");
+            }}
+          >
+            Create an account. Log In?
+          </SubmitButton>
+        </div>
+      </FormContainer>
     </div>
   );
 };

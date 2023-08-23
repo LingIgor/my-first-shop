@@ -1,5 +1,5 @@
 import React from "react";
-import LOGO from "../../images/logo.png";
+import LOGO from "../../images/logo.jpg";
 import { ROUTES } from "../../utils/routesObject";
 import { Link } from "react-router-dom";
 
