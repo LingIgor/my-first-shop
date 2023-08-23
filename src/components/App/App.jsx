@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { getCategories } from "../../redux/categoriesSlice/categoriesSlice";
 import { getProducts } from "../../redux/poductsSlice/productsSlice";
 import { UserForm } from "../User/UserForm";
+import { MainContainer } from "./App.styled";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -17,14 +18,13 @@ export const App = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <MainContainer>
       <Header />
       <UserForm />
       <div>
-        <Sidebar />
         <AppRoutes />
       </div>
       <Footer />
-    </div>
+    </MainContainer>
   );
 };

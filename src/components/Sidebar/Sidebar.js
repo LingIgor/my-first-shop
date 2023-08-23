@@ -1,40 +1,45 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 
-export const Sidebar = () => {
+import {
+  Container,
+  SideStyleBar,
+  Categories,
+  Content,
+  Nav,
+  Ul,
+  Li,
+  Link,
+  FooterLinks,
+  FooterLink,
+} from "./SideBar.styled";
+
+export const Sidebar = ({ amount }) => {
   const { list } = useSelector(({ categories }) => categories);
-
+  const oneSideBar = list.filter((_, i) => i < amount);
   return (
-    <div>
-      <div>CATEGORIES</div>
-      <nav>
-        <ul>
-          {list.map(({ id, name }) => (
-            <li key={id}>
-              <NavLink
-                // className={({ isActive }) =>
-                //   `${isActive}`
-                //     ? (style = { сolor: "#44014C" })
-                //     : (style = { сolor: "ffffff" })
-                // }
-                to={`/categories/${id}`}
-              >
-                {name}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <div>
-        <a href="/help" target="_blank">
-          Help
-        </a>
-        <a href="/terms" target="_blank">
-          Terms
-        </a>
-      </div>
-    </div>
+    <Container>
+      <SideStyleBar>
+        <Categories>CATEGORIES</Categories>
+        <Nav>
+          <Ul>
+            {oneSideBar.map(({ id, name }) => (
+              <Li key={id}>
+                <Link to={`/categories/${id}`}>{name}</Link>
+              </Li>
+            ))}
+          </Ul>
+        </Nav>
+        <FooterLinks>
+          <FooterLink href="/help" target="_blank">
+            Help
+          </FooterLink>
+          <FooterLink href="/terms" target="_blank">
+            Terms
+          </FooterLink>
+        </FooterLinks>
+      </SideStyleBar>
+      <Content>{/* Content of the main section */}</Content>
+    </Container>
   );
 };
